@@ -1,0 +1,33 @@
+{
+  "name": "composad",
+  "version": "1.0.0",
+  "description": "tool for easily combining monads",
+  "main": "composad.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cogmob/composad.git"
+  },
+  "keywords": [
+    "monad",
+    "monads"
+  ],
+  "author": "Luke Avery <luke.avery@live.co.uk> (www.cogmob.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Cogmob/composad/issues"
+  },
+  "homepage": "https://github.com/Cogmob/composad#readme",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4"
+  },
+  "dependencies": {
+    "ramda": "^0.18.0"
+  }
+}
