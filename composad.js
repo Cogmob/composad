@@ -9,8 +9,9 @@ function isFunction(object) {
     return object && getClass.call(object) == '[object Function]';
 }
 
-// All monads must implement name, unit, bind, canBeRemoved
+// all monads must implement name, unit, bind
 
+// pipe
 exports.pipe = ramda.pipe;
 
 exports.pipeIf = function(guardFunc) {
@@ -39,6 +40,39 @@ exports.pipeSwitch = function(guardFunc, cases) {
         if (cases.hasOwnProperty(key)) {
             return ramda.pipe.apply(this, cases[key])(i);
         }
+        return i;
+    }
+}
+
+// tee
+exports.tee = function() {
+    var args = Array.prototype.slice.call(arguments);
+    return function(i) {
+        exports.pipe.apply(this, args)(i);
+        return i;
+    }
+}
+
+exports.teeIf = function() {
+    var args = Array.prototype.slice.call(arguments);
+    return function(i) {
+        exports.pipeIf.apply(this, args)(i);
+        return i;
+    }
+}
+
+exports.teeIfElse = function() {
+    var args = Array.prototype.slice.call(arguments);
+    return function(i) {
+        exports.pipeIfElse.apply(this, args)(i);
+        return i;
+    }
+}
+
+exports.teeSwitch = function() {
+    var args = Array.prototype.slice.call(arguments);
+    return function(i) {
+        exports.pipeSwitch.apply(this, args)(i);
         return i;
     }
 }
@@ -87,11 +121,18 @@ exports.makeComposad = function() {
         return i;
     };
 
-    monad.tee = function(i) {
+    monad.log = function(i) {
         return pro(monad.unit(i));
     }
 
     return monad;
+}
+
+exports.setField(obj,key) {
+    function(val) {
+        obj[key] = val;
+        return val;
+    }
 }
 
 exports.removeMonad = function() {

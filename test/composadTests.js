@@ -237,3 +237,116 @@ describe('pipeSwitch', function() {
     });
 });
 
+
+describe('teeIf', function() {
+    it('should run the function', function() {
+        expect(teeIf(function() {return true;}, function() {
+            return 'hey';
+        })('correct')).to.equal('correct');
+    });
+
+    it('should run in a composad chain', function() {
+        var result = tee(
+            echo('asdf'),
+            teeIf(
+                equal('asdf'),
+                echo('correct')
+            )
+        )('done');
+        expect(result).to.equal('done');
+    });
+});
+
+/*
+describe('teeIfElse', function() {
+    it('should run the true function', function() {
+        expect(teeIfElse(
+            function() {return true;},
+            [function() {return 'hey';}],
+            [function() {}]
+        )()).to.equal('hey');
+    });
+
+    it('should run the false function', function() {
+        expect(teeIfElse(
+            function() {return false;},
+            [function() {}],
+            [function() {return 'other';}]
+        )()).to.equal('other');
+    });
+
+    it('should run in a composad chain', function() {
+        var result = tee(
+            echo('asdf'),
+            teeIfElse(
+                equal('asdf'),
+                [echo('correct')],
+                [echo('incorrect')]
+            )
+        )();
+        expect(result).to.equal('correct');
+    });
+
+    it('should not run in a composad chain', function() {
+        var result = tee(
+            echo('asdf'),
+            teeIfElse(
+                equal('not equal'),
+                [echo('incorrect')],
+                [echo('correct')]
+            )
+        )();
+        expect(result).to.equal('correct');
+    });
+});
+
+describe('teeSwitch', function() {
+    it('should run the first function', function() {
+        expect(teeSwitch(
+            function() {return 'one';},
+            {
+                'one': [function() {return 'hey';}],
+                'two': [function() {}]
+            }
+        )()).to.equal('hey');
+    });
+
+    it('should run the second function', function() {
+        expect(teeSwitch(
+            function() {return 'two';},
+            {
+                'one': [function() {}],
+                'two': [function() {return 'hey';}]
+            }
+        )()).to.equal('hey');
+    });
+
+    it('should run in a composad chain', function() {
+        var result = tee(
+            echo('one'),
+            teeSwitch(
+                function() {return 'one';},
+                {
+                    'one': [echo('correct')],
+                    'two': [echo('incorrect')]
+                }
+            )
+        )();
+        expect(result).to.equal('correct');
+    });
+
+    it('should not run in a composad chain', function() {
+        var result = tee(
+            echo('correct'),
+            teeSwitch(
+                function() {return 'no match';},
+                {
+                    'one': [echo('one')],
+                    'two': [echo('two')]
+                }
+            )
+        )();
+        expect(result).to.equal('correct');
+    });
+});
+*/
